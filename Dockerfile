@@ -20,14 +20,19 @@ FROM gcr.io/distroless/python3-debian11
 
 WORKDIR /app
 
+# Copy venv and app
 COPY --from=builder /opt/venv /opt/venv
 COPY --from=builder /app /app
 
-ENV PATH="/opt/venv/bin"
+# Use virtualenv
+ENV PATH="/opt/venv/bin:$PATH"
 
+# Expose port
 EXPOSE 8000
 
+# Use non-root user
 USER nonroot
 
-# Run the Django app using gunicorn
-CMD ["/opt/venv/bin/gunicorn", "notesapp.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Run Gunicorn directly
+CMD ["gunicorn", "notesapp.wsgi:application", "--bind", "0.0.0.0:8000"]
+
