@@ -30,9 +30,8 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Expose port
 EXPOSE 8000
 
-# Use non-root user
+# Non-root user
 USER nonroot
 
-# Run Gunicorn directly
-CMD ["gunicorn", "notesapp.wsgi:application", "--bind", "0.0.0.0:8000"]
-
+# Run Gunicorn using full path
+CMD ["/opt/venv/bin/gunicorn", "notesapp.wsgi:application", "--bind", "0.0.0.0:8000"]
