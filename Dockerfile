@@ -25,3 +25,44 @@ EXPOSE 8000
 
 # Run migrations automatically and start gunicorn
 CMD ["sh", "-c", "python manage.py migrate && gunicorn notesapp.wsgi:application --bind 0.0.0.0:8000"]
+
+
+# @Library("Shared") _
+# pipeline {
+#     agent any
+
+#     stages {
+
+#         stage('Code') {
+#             steps {
+#                 scripts{
+#                 echo "This is cloning the code"
+#                 git url: "https://github.com/abdulmanan-ali/django-notes-app/", branch: 'main'
+#                 echo "Code Cloning Successfully"                  
+#                 }
+
+#             }
+#         }
+
+#         stage('build') {
+#             steps {
+#                 echo "This is building the code"
+#                 sh "docker build -t notes-app-jenkins:latest ."
+#             }
+#         }
+
+#         stage('push to dockerhub') {
+#             steps {
+#                 echo "This is pushing the code to docker hub"
+#             }
+#         }
+
+#         stage('deploy') {
+#             steps {
+#                 echo "This is deploying the code"
+#                 sh "docker run --name=notes-app-jenkins -d -p 8000:8000 notes-app-jenkins:latest"
+#             }
+#         }
+#     }
+# }
+
